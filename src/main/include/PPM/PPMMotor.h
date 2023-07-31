@@ -15,7 +15,7 @@ class PPMMotor : private PPMController {
    * 
    * @param channel 
    */
-  explicit PPMMotor(int channel) : PPMController(channel, 1_kHz) {}
+  explicit PPMMotor(int channel) : PPMController(channel, 10_kHz) {}
 
   /**
    * @brief Construct a new PPMMotor object with update rate (default is 100hz)
