@@ -19,7 +19,7 @@ class PPMController {
    * 
    * @param channel 0-9 are on-board DIO, 10-19 are on the MXP port
    */
-  explicit PPMController(int channel) : _output(channel), _pulseWidth(1.5_ms), _lastPulse(0_ms), _state(State::kLow) {
+  explicit PPMController(int channel) : _output(channel) {
     _lastPulse = frc::Timer::GetFPGATimestamp();
   }
 
@@ -30,7 +30,7 @@ class PPMController {
    * @param channel 
    * @param loopRate_hz 
    */
-  explicit PPMController(int channel, units::hertz_t loopRate_hz) : _output(channel), _pulseWidth(1.5_ms), _lastPulse(0_ms), _state(State::kLow) {
+  explicit PPMController(int channel, units::hertz_t loopRate_hz) : _output(channel) {
     _lastPulse = frc::Timer::GetFPGATimestamp();
     _running = true;
 
@@ -38,7 +38,7 @@ class PPMController {
     _loop_t = std::thread([this, loopRate_hz] {
       while (_running) {
         update();
-        frc::Wait(1_s / loopRate_hz);
+        frc::Wait(1_s / (loopRate_hz.to<int>())); // not even sure why I bothered with the units here, I have to convert it anyway...
       }
     });
   }
@@ -121,12 +121,12 @@ class PPMController {
   enum class State {
     kLow, // 0
     kHigh, // 1
-  } _state;
+  } _state = State::kLow;
 
   frc::DigitalOutput _output; // 0-9 are on-board, 10-19 are on the MXP port
   units::microsecond_t _pulseWidth; // pulse width in the update range [i.e 1ms to 2ms]
   units::microsecond_t _updateRate; // update rate that the pulse resides in [20ms default]
-  units::microsecond_t _lastPulse;
+  units::microsecond_t _lastPulse = 0_ms;
 
   std::thread _loop_t; // thread for if this runs async
   std::atomic<bool> _running = std::atomic<bool>(false); // atomic bool for if the loop is running
