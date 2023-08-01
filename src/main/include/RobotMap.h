@@ -31,6 +31,4 @@ struct RobotMap {
   PPMFlipsky elevatorMotor{4, 10_kHz};
 
   Controllers controller;
-  Drivebase drivebase;
-  HoldingFlaps holdingFlaps;
 };
