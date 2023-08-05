@@ -15,15 +15,7 @@ class PPMMotor : private PPMController {
    * 
    * @param channel 
    */
-  explicit PPMMotor(int channel) : PPMController(channel, 10_kHz) {}
-
-  /**
-   * @brief Construct a new PPMMotor object with update rate (default is 100hz)
-   * 
-   * @param channel 
-   * @param loopRate_hz 
-   */
-  explicit PPMMotor(int channel, units::hertz_t loopRate_hz) : PPMController(channel, loopRate_hz) {}
+  explicit PPMMotor(int channel) : PPMController(channel) {}
 
   /**
    * @brief Construct a new PPMMotor object with custom bounds (default is 1ms, 1.5ms and 2ms) and update rate (default is 100hz)
@@ -34,7 +26,7 @@ class PPMMotor : private PPMController {
    * @param neutral 
    * @param max 
    */
-  explicit PPMMotor(int channel, units::hertz_t loopRate_hz, units::microsecond_t min, units::microsecond_t neutral, units::microsecond_t max) : PPMController(channel) {
+  explicit PPMMotor(int channel, units::microsecond_t min, units::microsecond_t neutral, units::microsecond_t max) : PPMController(channel, 100_Hz) {
     _bounds.min = min;
     _bounds.neutral = neutral;
     _bounds.max = max;

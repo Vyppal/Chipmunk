@@ -95,6 +95,7 @@ class PPMController {
    * 
    */
   void update() {
+    std::cout << "Test" << std::endl;
     units::microsecond_t now = frc::Timer::GetFPGATimestamp(); // get the current time
     units::microsecond_t difference = now - _lastPulse; // get the difference between the current time and the last pulse
     switch (_state) {

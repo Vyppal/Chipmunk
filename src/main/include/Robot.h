@@ -31,4 +31,14 @@ class Robot : public frc::TimedRobot {
 
  private:
   frc::Joystick driverJoystick{0}; // Creates a new joystick named driverJoystick, at port 0
+
+  double driveDeadzone = 0.05;
+  double twistDeadzone = 0.05;
+
+  double maxForwardSpeed = 2.23; // in meters per second
+  double maxRotationSpeed = 1;
+  double distanceBetweenWheels = 0.64;
+
+  double maxMotorSpeed = maxForwardSpeed + distanceBetweenWheels/2 * maxRotationSpeed;
+  // 2.23 m/s
 };
