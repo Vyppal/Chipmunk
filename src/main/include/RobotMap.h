@@ -44,10 +44,10 @@ struct RobotMap {
   // TankConfiguration tankConfig;
 
   TankConfig tankConfig{
+    PPMFlipsky{6},
     PPMFlipsky{0},
+    PPMFlipsky{9},
     PPMFlipsky{1},
-    PPMFlipsky{2},
-    PPMFlipsky{3},
     0.64
   };
   PPMFlipsky elevatorMotor{4};

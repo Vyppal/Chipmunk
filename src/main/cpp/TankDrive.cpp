@@ -16,10 +16,12 @@ void TankDrivebase::UpdateSpeeds() {
   double rotationSpeed = twistValue * maxRotationSpeed;
 
   double leftWheelVelocity = forwardSpeed + _halvedWheelDistance * rotationSpeed;
-  double rightWheelVelocity =  -(forwardSpeed + _halvedWheelDistance * rotationSpeed);
+  double rightWheelVelocity = -(forwardSpeed - _halvedWheelDistance * rotationSpeed);
 
   _config->leftFront.set(leftWheelVelocity / maxMotorSpeed);
   _config->leftBack.set(leftWheelVelocity / maxMotorSpeed);
   _config->rightFront.set(rightWheelVelocity / maxMotorSpeed);
   _config->rightBack.set(rightWheelVelocity / maxMotorSpeed);
+  // _config->leftBack.set(-0.4);
+  // _config->leftFront.set(-0.4);
 }
