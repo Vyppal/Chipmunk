@@ -58,8 +58,17 @@ class PPMMotor : public MotorController, private PPMController {
    */
   virtual int getChannel();
 
+  /**
+   * @brief Set the power of the motor, -1 to 1
+   * 
+   * @param power 
+   */
   virtual void set(double power) override;
 
+  /**
+   * @brief Disable the motor
+   * 
+   */
   virtual void disable() override;
 
  private:

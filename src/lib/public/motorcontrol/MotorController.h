@@ -130,8 +130,6 @@ class MotorController {
       power = _deadbandMax;
     } else if (power < 0 && power > _deadbandMin) { // if in range of min deadband
       power = _deadbandMin;
-    } else {
-      power = 0;
     }
     return power;
   }
