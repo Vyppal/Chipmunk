@@ -5,23 +5,15 @@
 
 #include <units/length.h>
 #include <units/time.h>
-
-// struct LeftMotors {
-//   PPMFlipsky front;
-//   PPMFlipsky back;
-// };
-
-// struct RightMotors {
-//   PPMFlipsky front;
-//   PPMFlipsky back;
-// };
+#include <units/velocity.h>
+#include <units/angular_velocity.h>
 
 struct TankConfig {
   PPMFlipsky leftFront;
   PPMFlipsky leftBack;
   PPMFlipsky rightFront;
   PPMFlipsky rightBack;
-  double trackWidth;
+  units::meter_t trackWidth;
 };
 
 
@@ -40,8 +32,8 @@ class TankDrivebase {
   double driveDeadzone = 0.05;
   double twistDeadzone = 0.01;
 
-  double maxForwardSpeed = 2.23;//_m / 1_s; // in meters per second
-  double maxRotationSpeed = 1.7;
+  units::meters_per_second_t maxForwardSpeed = 2.23_m / 1_s;
+  units::degrees_per_second_t maxRotationSpeed = 120_deg / 1_s;
 
   double maxMotorSpeed = maxForwardSpeed + _halvedWheelDistance * maxRotationSpeed;
 };
