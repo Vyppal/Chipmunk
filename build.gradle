@@ -1,6 +1,6 @@
 plugins {
   id 'org.ysb33r.doxygen' version '0.7.0'
-  id 'edu.wpi.first.GradleRIO' version '2023.2.1'
+  id 'edu.wpi.first.GradleRIO' version '2023.4.3'
   id "cpp"
   id "google-test-test-suite"
 }
@@ -32,10 +32,6 @@ allprojects {
 // Makes all projects use the same buildDir, more efficient for "expanding archives"
 subprojects {
   project.buildDir = rootProject.buildDir
-}
-
-wrapper {
-  gradleVersion = '7.3.3'
 }
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
@@ -70,7 +66,7 @@ deploy {
 def deployArtifact = deploy.targets.roborio.artifacts.frcCpp
 
 // Set this to true to enable desktop support.
-def includeDesktopSupport = true
+def includeDesktopSupport = false
 
 // Set to true to run simulation in debug mode
 wpi.cpp.debugSimulation = false
@@ -99,7 +95,8 @@ model {
             }
 
             binaries.all {
-              lib project: ':wombat', library: 'Wombat', linkage: 'static'
+              lib project: ':hal', library: 'HAL', linkage: 'static'
+              // lib project: ':wombat', library: 'Wombat', linkage: 'static'
             }
 
             // Set deploy task to deploy this component
@@ -115,27 +112,8 @@ model {
             wpi.cpp.deps.wpilib(it)
         }
     }
-    testSuites {
-        frcUserProgramTest(GoogleTestTestSuiteSpec) {
-            testing $.components.frcUserProgram
+}
 
-            sources.cpp {
-                source {
-                    srcDir 'src/test/cpp'
-                    include '**/*.cpp'
-                }
-            }
-
-            binaries.all {
-              lib project: ':wombat', library: 'Wombat', linkage: 'static'
-            }
-
-            // Enable run tasks for this component
-            wpi.cpp.enableExternalTasks(it)
-
-            wpi.cpp.vendor.cpp(it)
-            wpi.cpp.deps.wpilib(it)
-            wpi.cpp.deps.googleTest(it)
-        }
-    }
+wrapper {
+  gradleVersion = '8.1'
 }
