@@ -5,7 +5,7 @@
 #include <frc/Joystick.h>
 #include <frc/Servo.h>
 
-#include "PPM/PPMFlipsky.h"
+#include "motorcontrol/PPMFlipsky.h"
 
 #include "TankDrive.h"
 

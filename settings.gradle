@@ -31,5 +31,4 @@ pluginManagement {
 }
 
 include 'hal'
-// include 'wombat'
-rootProject.name = '2023-ChargedUp'
+rootProject.name = 'Chipmunk'

@@ -1,8 +1,6 @@
 #include "Robot.h"
 #include <iostream>
 
-// setup two motors (left side of the drivebase) on DIO channels 0 and 1
-
 void Robot::RobotInit() {
   _tankDrive = new TankDrivebase(&_map.tankConfig, &_map.controllers.primary);
 }

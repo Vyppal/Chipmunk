@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PPM/PPMFlipsky.h"
+#include "motorcontrol/PPMFlipsky.h"
 #include <frc/Joystick.h>
 
 #include <units/length.h>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PPMMotor.h"
+#include "ppm/PPMMotor.h"
 
 /**
  * @brief PPM Flipsky motor controller
