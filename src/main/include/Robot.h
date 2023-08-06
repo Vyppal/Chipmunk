@@ -11,6 +11,8 @@
 #include <units/length.h>
 #include <frc/Joystick.h>
 
+#include "RobotMap.h"
+#include "TankDrive.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -30,5 +32,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  frc::Joystick driverJoystick{0}; // Creates a new joystick named driverJoystick, at port 0
+  RobotMap _map;
+
+  TankDrivebase *_tankDrive;
 };

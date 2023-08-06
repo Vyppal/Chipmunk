@@ -5,30 +5,50 @@
 #include <frc/Joystick.h>
 #include <frc/Servo.h>
 
-
 #include "PPM/PPMFlipsky.h"
 
+#include "TankDrive.h"
+
+#include <units/length.h>
+#include <units/time.h>
 
 struct RobotMap {
   struct Controllers {
     frc::Joystick primary{0};
   };
-  struct Drivebase {
-    struct Left {
-      PPMFlipsky front{0, 10_kHz};
-      PPMFlipsky back{1, 10_kHz};
-    } left;
-    struct Right {
-      PPMFlipsky front{2, 10_kHz};
-      PPMFlipsky back{3, 10_kHz};
-    } right;
-  } drivebase;
-  struct HoldingFlaps {
-    frc::Servo left{4};
-    frc::Servo right{5};
-  } holdingFlaps;
+  Controllers controllers;
+  // struct TankConfiguration {
+  //   PPMFlipsky leftFront{0};
+  //   PPMFlipsky leftBack{1};
+  //   PPMFlipsky rightFront{2};
+  //   PPMFlipsky rightBack{3};
+  //   int wheelDist = 0.64; // distance between wheel sides
 
-  PPMFlipsky elevatorMotor{4, 10_kHz};
+  //   // LeftMotors {
+  //   //   PPMFlipsky front{0};
+  //   //   PPMFlipsky back{1};
+  //   // }; LeftMotors leftMotors;
+  //   // RightMotors {
+  //   //   PPMFlipsky front{2};
+  //   //   PPMFlipsky back{3};
+  //   // }; RightMotors rightMotors;
+    
+  //   TankConfig {
+  //     leftFront,
+  //     leftBack,
+  //     rightFront,
+  //     rightBack,
+  //     wheelDist
+  //   };
+  // };
+  // TankConfiguration tankConfig;
 
-  Controllers controller;
+  TankConfig tankConfig{
+    PPMFlipsky{0},
+    PPMFlipsky{1},
+    PPMFlipsky{2},
+    PPMFlipsky{3},
+    0.64
+  };
+  PPMFlipsky elevatorMotor{4};
 };
