@@ -17,31 +17,6 @@ struct RobotMap {
     frc::Joystick primary{0};
   };
   Controllers controllers;
-  // struct TankConfiguration {
-  //   PPMFlipsky leftFront{0};
-  //   PPMFlipsky leftBack{1};
-  //   PPMFlipsky rightFront{2};
-  //   PPMFlipsky rightBack{3};
-  //   int wheelDist = 0.64; // distance between wheel sides
-
-  //   // LeftMotors {
-  //   //   PPMFlipsky front{0};
-  //   //   PPMFlipsky back{1};
-  //   // }; LeftMotors leftMotors;
-  //   // RightMotors {
-  //   //   PPMFlipsky front{2};
-  //   //   PPMFlipsky back{3};
-  //   // }; RightMotors rightMotors;
-    
-  //   TankConfig {
-  //     leftFront,
-  //     leftBack,
-  //     rightFront,
-  //     rightBack,
-  //     wheelDist
-  //   };
-  // };
-  // TankConfiguration tankConfig;
 
   TankConfig tankConfig{
     PPMFlipsky{6},
