@@ -11,6 +11,8 @@
 #include <units/length.h>
 #include <frc/Joystick.h>
 
+#include "RobotMap.h"
+#include "TankDrive.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -30,15 +32,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  frc::Joystick driverJoystick{0}; // Creates a new joystick named driverJoystick, at port 0
+  RobotMap _map;
 
-  double driveDeadzone = 0.05;
-  double twistDeadzone = 0.05;
-
-  double maxForwardSpeed = 2.23; // in meters per second
-  double maxRotationSpeed = 1;
-  double distanceBetweenWheels = 0.64;
-
-  double maxMotorSpeed = maxForwardSpeed + distanceBetweenWheels/2 * maxRotationSpeed;
-  // 2.23 m/s
+  TankDrivebase *_tankDrive;
 };

@@ -2,6 +2,7 @@
 
 #include "PPMController.h"
 #include <units/voltage.h>
+#include <frc/motorcontrol/PWMTalonFX.h>
 
 /**
  * @brief Create a PPM DIO Motor object
@@ -15,7 +16,9 @@ class PPMMotor : private PPMController {
    * 
    * @param channel 
    */
-  explicit PPMMotor(int channel) : PPMController(channel) {}
+  explicit PPMMotor(int channel) : PPMController(channel) {
+    init();
+  }
 
   /**
    * @brief Construct a new PPMMotor object with custom bounds (default is 1ms, 1.5ms and 2ms) and update rate (default is 100hz)
@@ -26,10 +29,39 @@ class PPMMotor : private PPMController {
    * @param neutral 
    * @param max 
    */
-  explicit PPMMotor(int channel, units::microsecond_t min, units::microsecond_t neutral, units::microsecond_t max) : PPMController(channel, 100_Hz) {
+  explicit PPMMotor(int channel, units::microsecond_t min, units::microsecond_t neutral, units::microsecond_t max) : PPMController(channel) {
+    init();
+    setDeadband(neutral, neutral); // no deadband by default
+    setBounds(min, neutral, max);
+  }
+
+  /**
+   * @brief Set the Bounds of the motor
+   * 
+   * @param min minimum pulse width in pulse time (-100%)
+   * @param neutral neutral pulse width in pulse time (0%)
+   * @param max max pulse width in time pulse (+100%)
+   */
+  virtual void setBounds(units::microsecond_t min, units::microsecond_t neutral, units::microsecond_t max) {
     _bounds.min = min;
     _bounds.neutral = neutral;
     _bounds.max = max;
+
+
+    setConfig(_bounds.min, _bounds.deadbandMin, _bounds.neutral, _bounds.deadbandMax, _bounds.max);
+  }
+
+  /**
+   * @brief Set the Deadband of the motor
+   * 
+   * @param min minimum in pulse time (-deadband) i.e 1.5ms - 0.1ms = 1.4ms
+   * @param max maximum in pulse time (+deadband) i.e 1.5ms + 0.1ms = 1.6ms
+   */
+  virtual void setDeadband(units::microsecond_t min, units::microsecond_t max) {
+    _bounds.deadbandMin = min;
+    _bounds.deadbandMax = max;
+
+    setConfig(_bounds.min, _bounds.deadbandMin, _bounds.neutral, _bounds.deadbandMax, _bounds.max);
   }
   
   /**
@@ -38,7 +70,7 @@ class PPMMotor : private PPMController {
    * @param channel 
    */
   virtual void setChannel(int channel) {
-    setDIOChannel(channel);
+    setPPMChannel(channel);
   }
 
   /**
@@ -47,7 +79,7 @@ class PPMMotor : private PPMController {
    * @return int 
    */
   virtual int getChannel() {
-    return getDIOChannel();
+    return getPPMChannel();
   }
 
   /**
@@ -97,7 +129,7 @@ class PPMMotor : private PPMController {
   }
 
   /**
-   * @brief enable the motor, best during teleop init
+   * @brief Enable the motor if it was disabled
    * 
    */
   virtual void enable() {
@@ -125,10 +157,12 @@ class PPMMotor : private PPMController {
  private:
   struct Bounds {
     units::microsecond_t min = 1_ms;
+    units::microsecond_t deadbandMin = 1.5_ms;
     units::microsecond_t neutral = 1.5_ms;
+    units::microsecond_t deadbandMax = 1.5_ms;
     units::microsecond_t max = 2_ms;
   } _bounds;
 
   bool _inverted = false;
-  bool _disabled = true;
+  bool _disabled = false;
 };
