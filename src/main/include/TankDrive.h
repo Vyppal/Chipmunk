@@ -13,14 +13,16 @@ struct TankConfig {
   PPMFlipsky leftBack;
   PPMFlipsky rightFront;
   PPMFlipsky rightBack;
-  units::meter_t trackWidth;
+  double trackWidth;
 };
 
 
 class TankDrivebase {
  public:
   TankDrivebase(TankConfig *tankConfig, frc::Joystick *joystick);
+  
   void UpdateSpeeds();
+  void Halt();
 
 
  private:
@@ -32,8 +34,8 @@ class TankDrivebase {
   double driveDeadzone = 0.05;
   double twistDeadzone = 0.01;
 
-  units::meters_per_second_t maxForwardSpeed = 2.23_m / 1_s;
-  units::degrees_per_second_t maxRotationSpeed = 120_deg / 1_s;
+  double maxForwardSpeed = 2.23;
+  double maxRotationSpeed = 1.7;
 
   double maxMotorSpeed = maxForwardSpeed + _halvedWheelDistance * maxRotationSpeed;
 };
