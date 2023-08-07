@@ -1,7 +1,7 @@
 #include "ElevatorLift.h"
 
 
-ElevatorLift::ElevatorLift(ElevatorConfig *config, frc::Joystick *joystick) : _config(config), _joystick(joystick) {}
+ElevatorLift::ElevatorLift(ElevatorConfig *config, frc::Joystick *joystick) : _config(config), _joystick(joystick), _pid("", config->pidConfig) {}
 
 void ElevatorLift::SetSetpoint(units::meter_t setpoint) {
   _setpoint = setpoint;

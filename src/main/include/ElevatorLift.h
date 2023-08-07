@@ -11,11 +11,14 @@
 
 #include "PPM/PPMFlipsky.h"
 
+
 struct ElevatorConfig {
   PPMFlipsky motor;
   units::meter_t minHeight;
   units::meter_t maxHeight;
+  wom::PIDConfig<units::meter, units::volts> pidConfig;
 };
+
 
 class ElevatorLift {
  public:
@@ -32,6 +35,6 @@ class ElevatorLift {
   
   units::meter_t _currentHeight;
 
-  // wom::PIDController<units::meter, units::volt> _pid;
+  wom::PIDController<units::meter, units::volts> _pid;
 
 };
