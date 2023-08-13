@@ -10,7 +10,7 @@ void ElevatorLift::SetSetpoint(units::meter_t setpoint) {
 
 void ElevatorLift::OnUpdate(units::second_t dt) {
   units::volt_t voltage{0};
-  // voltage = _pid.Calculate(_currentHeight, dt, 1.2_V);
+  voltage = _pid.Calculate(_currentHeight, dt, 1.2_V);
   if (voltage > 6_V) {
     voltage = 6_V;
   }
