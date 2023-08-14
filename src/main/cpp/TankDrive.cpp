@@ -24,3 +24,10 @@ void TankDrivebase::UpdateSpeeds() {
   _config->rightBack.set(rightWheelVelocity / maxMotorSpeed);
 
 }
+
+void TankDrivebase::Halt() {
+  _config->leftFront.set(0);
+  _config->leftBack.set(0);
+  _config->rightFront.set(0);
+  _config->rightBack.set(0);
+}
