@@ -18,6 +18,7 @@
 #include "RobotMap.h"
 #include "TankDrive.h"
 #include "ElevatorLift.h"
+#include "VescCommunication.h"
 
 class Robot : public frc::TimedRobot {
  public:
