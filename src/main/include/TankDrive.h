@@ -1,26 +1,19 @@
 #pragma once
 
+#include "ppm/PPMMotor.h"
 #include "motorcontrol/PPMFlipsky.h"
 #include <frc/Joystick.h>
 
 #include <units/length.h>
 #include <units/time.h>
-
-// struct LeftMotors {
-//   PPMFlipsky front;
-//   PPMFlipsky back;
-// };
-
-// struct RightMotors {
-//   PPMFlipsky front;
-//   PPMFlipsky back;
-// };
+#include <units/velocity.h>
+#include <units/angular_velocity.h>
 
 struct TankConfig {
-  PPMFlipsky leftFront;
-  PPMFlipsky leftBack;
-  PPMFlipsky rightFront;
-  PPMFlipsky rightBack;
+  PPMMotor leftFront;
+  PPMMotor leftBack;
+  PPMMotor rightFront;
+  PPMMotor rightBack;
   double trackWidth;
 };
 
@@ -28,7 +21,9 @@ struct TankConfig {
 class TankDrivebase {
  public:
   TankDrivebase(TankConfig *tankConfig, frc::Joystick *joystick);
+  
   void UpdateSpeeds();
+  void Halt();
 
 
  private:
@@ -40,7 +35,7 @@ class TankDrivebase {
   double driveDeadzone = 0.05;
   double twistDeadzone = 0.01;
 
-  double maxForwardSpeed = 2.23;//_m / 1_s; // in meters per second
+  double maxForwardSpeed = 2.23;
   double maxRotationSpeed = 1.7;
 
   double maxMotorSpeed = maxForwardSpeed + _halvedWheelDistance * maxRotationSpeed;

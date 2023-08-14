@@ -3,6 +3,7 @@
 
 void Robot::RobotInit() {
   _tankDrive = new TankDrivebase(&_map.tankConfig, &_map.controllers.primary);
+  _elevator = new ElevatorLift(&_map.elevatorConfig, &_map.controllers.primary);
 }
 void Robot::RobotPeriodic() {}
 
@@ -14,7 +15,9 @@ void Robot::TeleopPeriodic() {
   _tankDrive->UpdateSpeeds();
 }
 
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+  _tankDrive->Halt();
+}
 void Robot::DisabledPeriodic() {}
 
 void Robot::TestInit() {}
