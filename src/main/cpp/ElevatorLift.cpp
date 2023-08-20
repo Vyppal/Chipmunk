@@ -9,9 +9,20 @@ void ElevatorLift::SetSetpoint(units::meter_t setpoint) {
 
 
 void ElevatorLift::OnUpdate(units::second_t dt) {
-  units::volt_t voltage{0};
-  voltage = _pid.Calculate(_currentHeight, dt, 1.2_V);
-  if (voltage > 6_V) {
-    voltage = 6_V;
+  if (_joystick->GetTriggerPressed()) {
+    _setpoint = (_config->maxHeight - _config->minHeight) * ((_joystick->GetZ() + 1) / 2) + _config->minHeight;
+    
+    double relativeDifference = (_setpoint - _currentHeight) / (_config->maxHeight - _config->minHeight);
+
+    relativeDifference = relativeDifference > 1 ? 1 : relativeDifference;
+    relativeDifference = relativeDifference < 0 ? 0 : relativeDifference;
+
+    double elevatorPower = std::tanh((1.5 * std::pow(relativeDifference, 3) + 0.3 * relativeDifference));
+    _config->motor.set(elevatorPower);
+    _currentHeight += CalculateDisplacement(elevatorPower, dt.value());
+
+  } else {
+    _config->motor.set(0);
   }
+
 }

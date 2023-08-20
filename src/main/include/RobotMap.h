@@ -31,6 +31,7 @@ struct RobotMap {
 
   ElevatorConfig elevatorConfig {
     PPMFlipsky{8},
+    0.4,
     0_m,
     0_m,
     {

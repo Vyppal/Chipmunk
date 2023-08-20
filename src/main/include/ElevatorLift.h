@@ -14,6 +14,7 @@
 
 struct ElevatorConfig {
   PPMMotor motor;
+  int speed;
   units::meter_t minHeight;
   units::meter_t maxHeight;
   wom::PIDConfig<units::meter, units::volts> pidConfig;
@@ -26,6 +27,7 @@ class ElevatorLift {
 
   void SetSetpoint(units::meter_t setpoint);
   void OnUpdate(units::second_t dt);
+  double CalculateDisplacement(double velocity, double dt);
 
  private:
   ElevatorConfig *_config;
