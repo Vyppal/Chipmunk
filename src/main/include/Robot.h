@@ -13,11 +13,9 @@
 #include <units/length.h>
 #include <units/time.h>
 
-#include "Util.h"
-
+// our libs
 #include "RobotMap.h"
-#include "TankDrive.h"
-#include "ElevatorLift.h"
+#include "TankDrivebase.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -37,8 +35,6 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  RobotMap _map;
-
-  TankDrivebase *_tankDrive;
-  ElevatorLift *_elevator;
+  RobotMap _robotMap;
+  TankDrivebase *_tankDrivebase;
 };

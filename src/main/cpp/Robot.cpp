@@ -1,23 +1,25 @@
 #include "Robot.h"
 #include <iostream>
 
+#include <frc/XboxController.h>
+
 void Robot::RobotInit() {
-  _tankDrive = new TankDrivebase(&_map.tankConfig, &_map.controllers.primary);
-  _elevator = new ElevatorLift(&_map.elevatorConfig, &_map.controllers.primary);
+  std::cout << "RobotInit" << std::endl;
+  _tankDrivebase = new TankDrivebase(_robotMap.drivebase.drivetrain);
 }
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  _robotMap.drivebase.drivetrain.set(0.1, 0.1);
+}
 
 void Robot::AutonomousInit() {}
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
-  _tankDrive->UpdateSpeeds();
+  // _tankDrivebase->update();
 }
 
-void Robot::DisabledInit() {
-  _tankDrive->Halt();
-}
+void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() {}
 
 void Robot::TestInit() {}
