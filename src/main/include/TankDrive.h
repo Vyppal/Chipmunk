@@ -38,5 +38,10 @@ class TankDrivebase {
   double maxForwardSpeed = 2.23 * 0.66; // * 0.66 for children safety factor
   double maxRotationSpeed = 1.7;
 
+  double accelerationPerTick = maxForwardSpeed / 50;
+
+  double rightMotorSpeed = 0;
+  double leftMotorSpeed = 0;
+
   double maxMotorSpeed = maxForwardSpeed + _halvedWheelDistance * maxRotationSpeed;
 };
