@@ -10,7 +10,7 @@ void TankDrivebase::UpdateSpeeds() {
   double twistValue = _joystick->GetTwist();
   
   joystickYValue = std::abs(joystickYValue) > driveDeadzone ? joystickYValue : 0;
-  twistValue = std::abs(twistValue) > twistDeadzone ? twistValue : 0;
+  twistValue = std::abs(twistValue) > twistDeadzone ? -twistValue : 0;
 
   double forwardSpeed = joystickYValue * maxForwardSpeed;
   double rotationSpeed = twistValue * maxRotationSpeed;

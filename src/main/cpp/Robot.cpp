@@ -3,7 +3,7 @@
 
 void Robot::RobotInit() {
   _tankDrive = new TankDrivebase(&_map.tankConfig, &_map.controllers.primary);
-  _elevator = new ElevatorLift(&_map.elevatorConfig, &_map.controllers.primary);
+  // _elevator = new ElevatorLift(&_map.elevatorConfig, &_map.controllers.primary);
 }
 void Robot::RobotPeriodic() {}
 

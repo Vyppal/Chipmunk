@@ -40,5 +40,5 @@ class Robot : public frc::TimedRobot {
   RobotMap _map;
 
   TankDrivebase *_tankDrive;
-  ElevatorLift *_elevator;
+  // ElevatorLift *_elevator;
 };

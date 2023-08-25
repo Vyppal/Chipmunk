@@ -10,10 +10,10 @@
 #include <units/angular_velocity.h>
 
 struct TankConfig {
-  PPMMotor leftFront;
-  PPMMotor leftBack;
-  PPMMotor rightFront;
-  PPMMotor rightBack;
+  PPMFlipsky leftFront;
+  PPMFlipsky leftBack;
+  PPMFlipsky rightFront;
+  PPMFlipsky rightBack;
   double trackWidth;
 };
 
@@ -35,7 +35,7 @@ class TankDrivebase {
   double driveDeadzone = 0.05;
   double twistDeadzone = 0.01;
 
-  double maxForwardSpeed = 2.23;
+  double maxForwardSpeed = 2.23 * 0.66; // * 0.66 for children safety factor
   double maxRotationSpeed = 1.7;
 
   double maxMotorSpeed = maxForwardSpeed + _halvedWheelDistance * maxRotationSpeed;

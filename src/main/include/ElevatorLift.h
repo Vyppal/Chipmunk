@@ -1,42 +1,42 @@
-#pragma once
+// #pragma once
 
-#include "PID.h"
-
-
-#include <units/length.h>
-#include <units/time.h>
-#include <units/voltage.h>
-
-#include <frc/Joystick.h>
-
-#include "ppm/PPMMotor.h"
+// #include "PID.h"
 
 
-struct ElevatorConfig {
-  PPMMotor motor;
-  int speed;
-  units::meter_t minHeight;
-  units::meter_t maxHeight;
-  wom::PIDConfig<units::meter, units::volts> pidConfig;
-};
+// #include <units/length.h>
+// #include <units/time.h>
+// #include <units/voltage.h>
+
+// #include <frc/Joystick.h>
+
+// #include "ppm/PPMMotor.h"
 
 
-class ElevatorLift {
- public:
-  ElevatorLift(ElevatorConfig *config, frc::Joystick *joystick);
+// struct ElevatorConfig {
+//   PPMMotor motor;
+//   int speed;
+//   units::meter_t minHeight;
+//   units::meter_t maxHeight;
+//   wom::PIDConfig<units::meter, units::volts> pidConfig;
+// };
 
-  void SetSetpoint(units::meter_t setpoint);
-  void OnUpdate(units::second_t dt);
-  double CalculateDisplacement(double velocity, double dt);
 
- private:
-  ElevatorConfig *_config;
-  frc::Joystick *_joystick;
+// class ElevatorLift {
+//  public:
+//   ElevatorLift(ElevatorConfig *config, frc::Joystick *joystick);
 
-  units::meter_t _setpoint;
+//   void SetSetpoint(units::meter_t setpoint);
+//   void OnUpdate(units::second_t dt);
+//   double CalculateDisplacement(double velocity, double dt);
+
+//  private:
+//   ElevatorConfig *_config;
+//   frc::Joystick *_joystick;
+
+//   units::meter_t _setpoint;
   
-  units::meter_t _currentHeight;
+//   units::meter_t _currentHeight;
 
-  wom::PIDController<units::meter, units::volts> _pid;
+//   wom::PIDController<units::meter, units::volts> _pid;
 
-};
+// };
