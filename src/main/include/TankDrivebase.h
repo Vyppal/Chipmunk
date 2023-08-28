@@ -1,21 +1,56 @@
 #include "Drivetrain.h"
 
 class TankDrivebase {
-  public:
-    TankDrivebase(Drivetrain &drivetrain) : _drivetrain(drivetrain) {}
+ public:
+  TankDrivebase(Drivetrain &drivetrain) : _drivetrain(drivetrain) {}
   
     // void onAttach() override {
     //   // nothing to do
     // }
 
-    // void onUpdate() override {
-      
-    // }
+      // void onUpdate() override {
+
+      // }
+  void TankDrivebase::UpdateSpeeds() {
+    double joystickYValue = _joystick->GetY();
+    double twistValue = _joystick->GetTwist();
+
+    joystickYValue = std::abs(joystickYValue) > driveDeadzone ? joystickYValue : 0;
+    twistValue = std::abs(twistValue) > twistDeadzone ? -twistValue : 0;
+
+    double leftWheelVelocity = joystickYValue*maxForwardSpeed + _halvedWheelDistance * twistValue*maxRotationSpeed;
+    double rightWheelVelocity = -(joystickYValue*maxForwardSpeed - _halvedWheelDistance * twistValue*maxRotationSpeed);
+
+    double maxLeftRequested = leftWheelVelocity / maxMotorSpeed; 
+    double maxRightRequested = rightWheelVelocity / maxMotorSpeed;
+
+    if (maxLeftRequested > abs(leftMotorSpeed)) {
+      int leftSign = leftMotorSpeed != 0 ? leftMotorSpeed/abs(leftMotorSpeed) : (leftWheelVelocity != 0 ? leftWheelVelocity / abs(leftWheelVelocity) : 1);
+      int rightSign = rightMotorSpeed != 0 ? rightMotorSpeed/abs(rightMotorSpeed) : (rightWheelVelocity != 0 ? rightWheelVelocity / abs(rightWheelVelocity) : 1);
+      leftMotorSpeed = leftSign * std::max(0, std::min(accelerationPerTick + abs(leftMotorSpeed), abs(maxLeftRequested)));
+      rightMotorSpeed = rightSign * std::max(0, std::min(accelerationPerTick + abs(rightMotorSpeed), abs(maxRightRequested)));
+    }
+    else {
+      leftMotorSpeed = leftWheelVelocity / maxMotorSpeed;
+      rightMotorSpeed = rightWheelVelocity / maxMotorSpeed; 
+    }
+
+   val = (int)(cpd * 12 / leftMotorSpeed + 0.5);
+    _drivetrain.set(leftMotorSpeed, rightMotorSpeed)
+  }
+
+    void TankDrivebase::Halt() {
+    _config->leftFront.set(0);
+    _config->leftBack.set(0);
+    _config->rightFront.set(0);
+    _config->rightBack.set(0);
+  }
+
   private:
     Drivetrain &_drivetrain;
 
     
-  double _halvedWheelDistance = 0.55;
+  double _halvedWheelDistance = 0.64;
 
   double driveDeadzone = 0.05;
   double twistDeadzone = 0.01;
