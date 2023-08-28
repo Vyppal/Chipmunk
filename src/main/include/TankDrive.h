@@ -35,8 +35,8 @@ class TankDrivebase {
   double driveDeadzone = 0.05;
   double twistDeadzone = 0.01;
 
-  double maxForwardSpeed = 2.23 * 0.66; // * 0.66 for children safety factor
-  double maxRotationSpeed = 1.7;
+  const double maxForwardSpeed = 10; // * 0.66 for children safety factor
+  double maxRotationSpeed = 24;
 
   double accelerationPerTick = maxForwardSpeed / 50;
 
