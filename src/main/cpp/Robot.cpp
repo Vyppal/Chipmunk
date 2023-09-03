@@ -1,23 +1,29 @@
 #include "Robot.h"
 #include <iostream>
 
+#include "CAN_VESC.h"
+
+CAN_VESC *m;
+
 void Robot::RobotInit() {
-  _tankDrive = new TankDrivebase(&_map.tankConfig, &_map.controllers.primary);
-  _elevator = new ElevatorLift(&_map.elevatorConfig, &_map.controllers.primary);
+  std::cout << "Starting CAN Motor control" << std::endl;
+  m = new CAN_VESC(14);
 }
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+  std::cout << "Position: " << m->get_position() << std::endl;
+}
 
 void Robot::AutonomousInit() {}
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
-  _tankDrive->UpdateSpeeds();
+  // m.vesc_set_duty_b(1.0);
+  // m.vesc_set_duty_b(1.0);
+  // std::cout << "Position: " << m.get_position() << std::endl;
 }
 
-void Robot::DisabledInit() {
-  _tankDrive->Halt();
-}
+void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() {}
 
 void Robot::TestInit() {}
