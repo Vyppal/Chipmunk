@@ -1,28 +1,17 @@
-// #include "ElevatorLift.h"
+#include "ElevatorLift.h"
 
 
-// ElevatorLift::ElevatorLift(ElevatorConfig *config, frc::Joystick *joystick) : _config(config), _joystick(joystick), _pid("", config->pidConfig) {}
+ElevatorLift::ElevatorLift(ElevatorConfig *config) : _config(config) {}
 
-// void ElevatorLift::SetSetpoint(units::meter_t setpoint) {
-//   _setpoint = setpoint;
-// }
+void ElevatorLift::setTarget(double target) {
+  _target = target;
+}
 
-
-// void ElevatorLift::OnUpdate(units::second_t dt) {
-//   if (_joystick->GetTriggerPressed()) {
-//     _setpoint = (_config->maxHeight - _config->minHeight) * ((_joystick->GetZ() + 1) / 2) + _config->minHeight;
-    
-//     double relativeDifference = (_setpoint - _currentHeight) / (_config->maxHeight - _config->minHeight);
-
-//     relativeDifference = relativeDifference > 1 ? 1 : relativeDifference;
-//     relativeDifference = relativeDifference < 0 ? 0 : relativeDifference;
-
-//     double elevatorPower = std::tanh((1.5 * std::pow(relativeDifference, 3) + 0.3 * relativeDifference));
-//     _config->motor.set(elevatorPower);
-//     _currentHeight += CalculateDisplacement(elevatorPower, dt.value());
-
-//   } else {
-//     _config->motor.set(0);
-//   }
-
-// }
+void ElevatorLift::onUpdate(double deltaTime, double target) {
+  //             = (2 * pi * r) * pulleyRatio * motorPosition
+  // _currentHeight = (2 * 3.14159265359 * 0.037) * pulleyRatio * (motor.getTicks() / 42);
+  double trueTarget = (target + 1) / 2;
+  _target = (_config->maxHeight - _config->minHeight) * trueTarget + _config->minHeight;
+  _config->motor.set(_config->pidController.compute(_target, _currentHeight, deltaTime));
+}
+void ElevatorLift::halt() { _config->motor.set(0); }

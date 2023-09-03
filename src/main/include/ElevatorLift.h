@@ -1,42 +1,39 @@
-// #pragma once
+#pragma once
 
-// #include "PID.h"
+#include <units/length.h>
+#include <units/time.h>
+#include <units/voltage.h>
 
+#include <frc/Joystick.h>
 
-// #include <units/length.h>
-// #include <units/time.h>
-// #include <units/voltage.h>
+#include "ppm/PPMMotor.h"
+#include "PIDController.h"
+#include "Gearbox.h"
 
-// #include <frc/Joystick.h>
-
-// #include "ppm/PPMMotor.h"
-
-
-// struct ElevatorConfig {
-//   PPMMotor motor;
-//   int speed;
-//   units::meter_t minHeight;
-//   units::meter_t maxHeight;
-//   wom::PIDConfig<units::meter, units::volts> pidConfig;
-// };
+struct ElevatorConfig {
+  Gearbox motor;
+  // int maxSpeed;
+  double minHeight;
+  double maxHeight;
+  PIDController pidController;
+};
 
 
-// class ElevatorLift {
-//  public:
-//   ElevatorLift(ElevatorConfig *config, frc::Joystick *joystick);
+class ElevatorLift {
+ public:
+  ElevatorLift(ElevatorConfig *_config);
 
-//   void SetSetpoint(units::meter_t setpoint);
-//   void OnUpdate(units::second_t dt);
-//   double CalculateDisplacement(double velocity, double dt);
+  void setTarget(double target);
+  void onUpdate(double deltaTime, double target);
 
-//  private:
-//   ElevatorConfig *_config;
-//   frc::Joystick *_joystick;
+  void halt();
 
-//   units::meter_t _setpoint;
-  
-//   units::meter_t _currentHeight;
+ private:
+  ElevatorConfig *_config;
 
-//   wom::PIDController<units::meter, units::volts> _pid;
+  double _target;
+  double _currentHeight;
 
-// };
+  double pulleyRatio = 16 / 42;
+
+};

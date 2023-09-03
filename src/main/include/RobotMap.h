@@ -15,16 +15,22 @@
 #include <units/time.h>
 #include <units/voltage.h>
 
+#include "ElevatorLift.h"
+
+
 struct RobotMap {
   struct Controllers {
     frc::Joystick driver{0};
   } controllers;
   struct Drivebase {
-    Gearbox left{Gearbox("Left Gearbox", {PPMFlipsky(9), PPMFlipsky(1)})};
-    Gearbox right{Gearbox("Right Gearbox", {PPMFlipsky(8), PPMFlipsky(0)})};
-    // Gearbox left = Gearbox{"Left Gearbox", lefts};
-    // Gearbox right = Gearbox{"Right Gearbox", rights};
-  
+    Gearbox left{"Left Gearbox", {PPMFlipsky(9), PPMFlipsky(1)}};
+    Gearbox right{"Right Gearbox", {PPMFlipsky(8), PPMFlipsky(0)}};  
     Drivetrain drivetrain{left, right};
   } drivebase;
+  ElevatorConfig elevatorConfig {
+  Gearbox{"Elevator Gearbox", {PPMFlipsky(5)}},
+  0,
+  0.43,
+  PIDController{0, 0, 0}
+};
 } robotMap;

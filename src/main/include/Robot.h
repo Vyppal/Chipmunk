@@ -6,16 +6,18 @@
 
 #include <string>
 
+
+
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/Joystick.h>
-
-#include <units/length.h>
-#include <units/time.h>
+// #include <frc/Timer.h>
 
 // our libs
 #include "RobotMap.h"
 #include "TankDrivebase.h"
+#include "ElevatorLift.h"
+#include "Time.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -37,4 +39,9 @@ class Robot : public frc::TimedRobot {
  private:
   RobotMap *_robotMap;
   TankDrivebase *_tankDrivebase;
+  ElevatorLift *_elevator;
+  int startTime = std::time(nullptr);
+  int currentTime =std::time(nullptr);
+  int prevTime = std::time(nullptr);
+  
 };
