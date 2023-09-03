@@ -1,48 +1,24 @@
-#include "TankDrive.h"
+#include "TankDrivebase.h"
 
-TankDrivebase::TankDrivebase(TankConfig *tankConfig, frc::Joystick *joystick) : _config(tankConfig), _joystick(joystick) {
-  _halvedWheelDistance = tankConfig->trackWidth / 2;
-}
+TankDrivebase::TankDrivebase(Drivetrain &drivetrain) : _drivetrain(drivetrain) {}
 
 
-void TankDrivebase::UpdateSpeeds() {
-  double joystickYValue = _joystick->GetY();
-  double twistValue = _joystick->GetTwist();
-  
+void TankDrivebase::UpdateSpeeds(double joystickYValue, double joystickTwistValue) {  
   joystickYValue = std::abs(joystickYValue) > driveDeadzone ? joystickYValue : 0;
-  twistValue = std::abs(twistValue) > twistDeadzone ? -twistValue : 0;
+  joystickTwistValue = std::abs(joystickTwistValue) > twistDeadzone ? -joystickTwistValue : 0;
 
   double forwardSpeed = joystickYValue * maxForwardSpeed;
-  double rotationSpeed = twistValue * maxRotationSpeed;
+  double rotationSpeed = joystickTwistValue * maxRotationSpeed;
 
   double leftWheelVelocity = forwardSpeed + _halvedWheelDistance * rotationSpeed;
   double rightWheelVelocity = -(forwardSpeed - _halvedWheelDistance * rotationSpeed);
 
-  double maxLeftRequested = leftWheelVelocity / maxMotorSpeed; 
-  double maxRightRequested = rightWheelVelocity / maxMotorSpeed;
+  double leftRequested = leftWheelVelocity / maxMotorSpeed; 
+  double rightRequested = rightWheelVelocity / maxMotorSpeed;
 
-  if (maxLeftRequested > abs(leftMotorSpeed)) {
-    int leftSign = leftMotorSpeed != 0 ? leftMotorSpeed/abs(leftMotorSpeed) : (leftWheelVelocity != 0 ? leftWheelVelocity / abs(leftWheelVelocity) : 1);
-    int rightSign = rightMotorSpeed != 0 ? rightMotorSpeed/abs(rightMotorSpeed) : (rightWheelVelocity != 0 ? rightWheelVelocity / abs(rightWheelVelocity) : 1);
-    leftMotorSpeed = leftSign * std::max(0, std::min(accelerationPerTick + abs(leftMotorSpeed), abs(maxLeftRequested)));
-    rightMotorSpeed = rightSign * std::max(0, std::min(accelerationPerTick + abs(rightMotorSpeed), abs(maxRightRequested)));
-  }
-  else {
-    leftMotorSpeed = leftWheelVelocity / maxMotorSpeed;
-    rightMotorSpeed = rightWheelVelocity / maxMotorSpeed; 
-  }
-
-
-  _config->leftFront.set(leftMotorSpeed);
-  _config->leftBack.set(leftMotorSpeed);
-  _config->rightFront.set(rightMotorSpeed);
-  _config->rightBack.set(rightMotorSpeed);
-
+  _drivetrain.set(leftRequested, rightRequested);
 }
 
 void TankDrivebase::Halt() {
-  _config->leftFront.set(0);
-  _config->leftBack.set(0);
-  _config->rightFront.set(0);
-  _config->rightBack.set(0);
+  _drivetrain.set(0, 0);
 }

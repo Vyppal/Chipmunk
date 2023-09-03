@@ -5,7 +5,8 @@
 
 void Robot::RobotInit() {
   std::cout << "RobotInit" << std::endl;
-  _tankDrivebase = new TankDrivebase(_robotMap.drivebase.drivetrain);
+  _robotMap = &robotMap;
+  _tankDrivebase = new TankDrivebase(_robotMap->drivebase.drivetrain);
 }
 void Robot::RobotPeriodic() {}
 
@@ -14,6 +15,7 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
+  _tankDrivebase->UpdateSpeeds(_robotMap->controllers.driver.GetY(), _robotMap->controllers.driver.GetTwist());
   // _tankDrivebase->update();
 }
 

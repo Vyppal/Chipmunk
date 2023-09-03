@@ -35,6 +35,6 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  RobotMap _robotMap;
+  RobotMap *_robotMap;
   TankDrivebase *_tankDrivebase;
 };
