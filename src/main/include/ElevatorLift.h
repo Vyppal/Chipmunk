@@ -23,7 +23,7 @@ class ElevatorLift {
  public:
   ElevatorLift(ElevatorConfig *_config);
 
-  void onUpdate(double deltaTime, double target);
+  void onUpdate(double deltaTime, double speedTarget, int directionRequest);
   void unnamedFunction1();
 
   void halt();

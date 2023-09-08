@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 
 
@@ -44,4 +45,5 @@ class Robot : public frc::TimedRobot {
   int currentTime =std::time(nullptr);
   int prevTime = std::time(nullptr);
   
+  std::vector<int> elevatorDirectionHandler = {0};
 };
