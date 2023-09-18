@@ -24,7 +24,7 @@ class ElevatorLift {
   ElevatorLift(ElevatorConfig *_config);
 
   void onUpdate(double deltaTime, double speedTarget, int directionRequest);
-  void unnamedFunction1();
+  void unnamedFunction1(int directionRequest);
 
   void halt();
 
