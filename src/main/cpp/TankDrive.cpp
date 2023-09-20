@@ -24,8 +24,8 @@ void TankDrivebase::UpdateSpeeds() {
   if (maxLeftRequested > abs(leftMotorSpeed)) {
     int leftSign = leftMotorSpeed != 0 ? leftMotorSpeed/abs(leftMotorSpeed) : (leftWheelVelocity != 0 ? leftWheelVelocity / abs(leftWheelVelocity) : 1);
     int rightSign = rightMotorSpeed != 0 ? rightMotorSpeed/abs(rightMotorSpeed) : (rightWheelVelocity != 0 ? rightWheelVelocity / abs(rightWheelVelocity) : 1);
-    leftMotorSpeed = leftSign * std::max(0, std::min(accelerationPerTick + abs(leftMotorSpeed), abs(maxLeftRequested)));
-    rightMotorSpeed = rightSign * std::max(0, std::min(accelerationPerTick + abs(rightMotorSpeed), abs(maxRightRequested)));
+    leftMotorSpeed = leftSign * std::max((double)0, std::min(accelerationPerTick + abs(leftMotorSpeed), (double)abs(maxLeftRequested)));
+    rightMotorSpeed = rightSign * std::max((double)0, std::min(accelerationPerTick + abs(rightMotorSpeed), (double)abs(maxRightRequested)));
   }
   else {
     leftMotorSpeed = leftWheelVelocity / maxMotorSpeed;

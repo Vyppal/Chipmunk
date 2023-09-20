@@ -19,6 +19,9 @@
 #include "TankDrive.h"
 #include "ElevatorLift.h"
 
+#include "motorcontrol/MotorController.h"
+#include "motorcontrol/PPMFlipsky.h"
+
 class Robot : public frc::TimedRobot {
  public:
   void RobotInit() override;
@@ -41,4 +44,7 @@ class Robot : public frc::TimedRobot {
 
   TankDrivebase *_tankDrive;
   // ElevatorLift *_elevator;
+  double _setpoint = 0;
+  PPMFlipsky elevatorMotor = PPMFlipsky{5};
+  double _currentHeight = 0;
 };

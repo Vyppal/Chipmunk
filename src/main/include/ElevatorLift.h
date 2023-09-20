@@ -9,15 +9,13 @@
 
 // #include <frc/Joystick.h>
 
-// #include "ppm/PPMMotor.h"
 
 
 // struct ElevatorConfig {
-//   PPMMotor motor;
+//   PPMFlipsky motor;
 //   int speed;
 //   units::meter_t minHeight;
 //   units::meter_t maxHeight;
-//   wom::PIDConfig<units::meter, units::volts> pidConfig;
 // };
 
 
@@ -37,6 +35,6 @@
   
 //   units::meter_t _currentHeight;
 
-//   wom::PIDController<units::meter, units::volts> _pid;
+// //   wom::PIDController<units::meter, units::volts> _pid;
 
 // };
