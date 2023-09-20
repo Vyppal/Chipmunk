@@ -18,9 +18,9 @@ struct RobotMap {
   };
   Controllers controllers;
   TankConfig tankConfig{
-    PPMFlipsky{0},
-    PPMFlipsky{9},
     PPMFlipsky{1},
+    PPMFlipsky{9},
+    PPMFlipsky{0},
     PPMFlipsky{8},
     0.64
   };
