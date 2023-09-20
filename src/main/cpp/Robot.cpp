@@ -14,6 +14,15 @@ void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
   _tankDrive->UpdateSpeeds();
+  if (_map.controllers.primary.GetTrigger()) {
+    int moveDir = 0;
+    if (fabs(_map.controllers.primary.GetThrottle()) > 0.15) {
+      _map.elevatorMotor.set(_map.controllers.primary.GetThrottle() / 5);
+    }
+  }
+  else {
+    _map.elevatorMotor.set(0);
+  }
 }
 
 void Robot::DisabledInit() {}
