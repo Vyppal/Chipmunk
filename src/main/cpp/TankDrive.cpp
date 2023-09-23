@@ -7,27 +7,22 @@ TankDrivebase::TankDrivebase(TankConfig *tankConfig, frc::Joystick *joystick) : 
 
 void TankDrivebase::UpdateSpeeds() {
   double joystickYValue = _joystick->GetY();
-  double twistValue = _joystick->GetTwist();
+  double joystickTwistValue = _joystick->GetTwist();
   
   joystickYValue = std::abs(joystickYValue) > driveDeadzone ? joystickYValue : 0;
-  twistValue = std::abs(twistValue) > twistDeadzone ? twistValue : 0;
+  joystickTwistValue = std::abs(joystickTwistValue) > twistDeadzone ? -joystickTwistValue : 0;
 
   double forwardSpeed = joystickYValue * maxForwardSpeed;
-  double rotationSpeed = twistValue * maxRotationSpeed;
+  double rotationSpeed = joystickTwistValue * maxRotationSpeed;
 
   double leftWheelVelocity = forwardSpeed + _halvedWheelDistance * rotationSpeed;
   double rightWheelVelocity = -(forwardSpeed - _halvedWheelDistance * rotationSpeed);
 
-  _config->leftFront.set(leftWheelVelocity / maxMotorSpeed);
-  _config->leftBack.set(leftWheelVelocity / maxMotorSpeed);
-  _config->rightFront.set(rightWheelVelocity / maxMotorSpeed);
-  _config->rightBack.set(rightWheelVelocity / maxMotorSpeed);
+  double leftRequested = leftWheelVelocity / maxMotorSpeed; 
+  double rightRequested = rightWheelVelocity / maxMotorSpeed;
 
-}
-
-void TankDrivebase::Halt() {
-  _config->leftFront.set(0);
-  _config->leftBack.set(0);
-  _config->rightFront.set(0);
-  _config->rightBack.set(0);
+  _config->leftFront.set(leftRequested);
+  _config->leftBack.set(leftRequested);
+  _config->rightFront.set(-rightRequested);
+  _config->rightBack.set(-rightRequested);
 }

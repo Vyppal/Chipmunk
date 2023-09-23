@@ -8,16 +8,11 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/smartdashboard/SendableChooser.h>
-#include <frc/Joystick.h>
-
 #include <units/length.h>
-#include <units/time.h>
-
-#include "Util.h"
+#include <frc/Joystick.h>
 
 #include "RobotMap.h"
 #include "TankDrive.h"
-#include "ElevatorLift.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -40,5 +35,6 @@ class Robot : public frc::TimedRobot {
   RobotMap _map;
 
   TankDrivebase *_tankDrive;
-  ElevatorLift *_elevator;
+  int posTimer = 0;
+  int negTimer = 0;
 };
