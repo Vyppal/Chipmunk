@@ -35,4 +35,6 @@ class Robot : public frc::TimedRobot {
   RobotMap _map;
 
   TankDrivebase *_tankDrive;
+  int posTimer = 0;
+  int negTimer = 0;
 };

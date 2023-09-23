@@ -15,14 +15,32 @@ void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
   _tankDrive->UpdateSpeeds();
   if (_map.controllers.primary.GetTrigger()) {
-    int moveDir = 0;
     if (fabs(_map.controllers.primary.GetThrottle()) > 0.15) {
-      _map.elevatorMotor.set(_map.controllers.primary.GetThrottle() / 5);
+      if (_map.controllers.primary.GetThrottle() > 0) {
+        posTimer = posTimer + 0.02;
+        // negTimer = 0;
+        if (posTimer < 5) {
+          _map.elevatorMotor.set(_map.controllers.primary.GetThrottle() / 3.141592653589793238462643383);
+        } else {
+          _map.elevatorMotor.set(0);
+        }
+      } else {
+        // posTimer = 0;
+        negTimer += 0.02;
+        if (negTimer < 5) {
+          _map.elevatorMotor.set(_map.controllers.primary.GetThrottle() / 3.141592653589793238462643383);
+        } else {
+          _map.elevatorMotor.set(0);
+        }
+      }
+    } else {
+      _map.elevatorMotor.set(0);
     }
   }
   else {
     _map.elevatorMotor.set(0);
   }
+  std::cout << posTimer << " " << negTimer << std::endl;
 }
 
 void Robot::DisabledInit() {}
