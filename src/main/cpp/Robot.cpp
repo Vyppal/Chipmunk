@@ -14,6 +14,21 @@ void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
   _tankDrive->UpdateSpeeds();
+
+  if (_map.controllers.primary.GetPOV() == 180) {
+    _tankDrive->lowerSpeed();
+  }
+  else if (_map.controllers.primary.GetPOV() == 0) {
+    _tankDrive->higherSpeed();
+  }
+
+  if (_tankDrive->getSpeeds()) {
+    std::cout << "[CODE WARNING] FASTER SPEEDS SELECTED!!!" << std::endl;
+  } else {
+    std::cout << "Slower Speeds Selected!" << std::endl;
+  }
+
+
   if (_map.controllers.primary.GetTrigger()) {
     if (fabs(_map.controllers.primary.GetThrottle()) > 0.15) {
       if (_map.controllers.primary.GetThrottle() > 0) {
@@ -40,7 +55,7 @@ void Robot::TeleopPeriodic() {
   else {
     _map.elevatorMotor.set(0);
   }
-  std::cout << posTimer << " " << negTimer << std::endl;
+  // std::cout << posTimer << " " << negTimer << std::endl;
 }
 
 void Robot::DisabledInit() {}

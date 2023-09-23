@@ -30,6 +30,18 @@ class TankDrivebase {
   TankDrivebase(TankConfig *tankConfig, frc::Joystick *joystick);
   void UpdateSpeeds();
 
+  void lowerSpeed() {
+    maxForwardSpeed = 1.5;
+    maxRotationSpeed = 1.61;
+  }
+  void higherSpeed() {
+    maxForwardSpeed = 2.23;
+    maxRotationSpeed = 2.4;
+  }
+  bool getSpeeds() {
+    return (maxForwardSpeed == 2.23);
+  }
+
 
  private:
   TankConfig *_config;
