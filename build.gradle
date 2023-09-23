@@ -87,16 +87,17 @@ model {
             sources.cpp {
                 source {
                     srcDir 'src/main/cpp'
+                    srcDir 'src/lib'
                     include '**/*.cpp', '**/*.cc'
                 }
                 exportedHeaders {
+                    srcDir 'src/lib/public'
                     srcDir 'src/main/include'
+
                 }
             }
-
             binaries.all {
               lib project: ':hal', library: 'HAL', linkage: 'static'
-              // lib project: ':wombat', library: 'Wombat', linkage: 'static'
             }
 
             // Set deploy task to deploy this component
