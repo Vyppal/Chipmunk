@@ -1,9 +1,10 @@
 #include "Robot.h"
 #include <iostream>
 
+// setup two motors (left side of the drivebase) on DIO channels 0 and 1
+
 void Robot::RobotInit() {
   _tankDrive = new TankDrivebase(&_map.tankConfig, &_map.controllers.primary);
-  _elevator = new ElevatorLift(&_map.elevatorConfig, &_map.controllers.primary);
 }
 void Robot::RobotPeriodic() {}
 
@@ -12,54 +13,18 @@ void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
-  _tankDrive->UpdateSpeeds();
+  _tankDrive->UpdateSpeedsXbox_V2();
 
-  if (_map.controllers.primary.GetPOV() == 180) {
-    _tankDrive->lowerSpeed();
-  }
-  else if (_map.controllers.primary.GetPOV() == 0) {
-    _tankDrive->higherSpeed();
-  }
-
-  if (_tankDrive->getSpeeds()) {
-    std::cout << "[CODE WARNING] FASTER SPEEDS SELECTED!!!" << std::endl;
+  if (_map.controllers.primary.GetLeftTriggerAxis() > 0.15) {
+    _map.elevatorMotor.set(_map.controllers.primary.GetLeftTriggerAxis() / 3.141592653589793238462643383279502);
+  } else if (_map.controllers.primary.GetRightTriggerAxis() > 0.15) {
+    _map.elevatorMotor.set(-_map.controllers.primary.GetRightTriggerAxis() / 3.141592653589793238462643383279502);
   } else {
-    std::cout << "Slower Speeds Selected!" << std::endl;
-  }
-
-
-  if (_map.controllers.primary.GetTrigger()) {
-    if (fabs(_map.controllers.primary.GetThrottle()) > 0.15) {
-      if (_map.controllers.primary.GetThrottle() > 0) {
-        posTimer = posTimer + 0.02;
-        // negTimer = 0;
-        if (posTimer < 5) {
-          _map.elevatorMotor.set(_map.controllers.primary.GetThrottle() / 3.141592653589793238462643383);
-        } else {
-          _map.elevatorMotor.set(0);
-        }
-      } else {
-        // posTimer = 0;
-        negTimer += 0.02;
-        if (negTimer < 5) {
-          _map.elevatorMotor.set(_map.controllers.primary.GetThrottle() / 3.141592653589793238462643383);
-        } else {
-          _map.elevatorMotor.set(0);
-        }
-      }
-    } else {
-      _map.elevatorMotor.set(0);
-    }
-  }
-  else {
     _map.elevatorMotor.set(0);
   }
-  // std::cout << posTimer << " " << negTimer << std::endl;
 }
 
-void Robot::DisabledInit() {
-  _tankDrive->Halt();
-}
+void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() {}
 
 void Robot::TestInit() {}

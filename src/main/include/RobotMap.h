@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include <frc/Joystick.h>
+#include <frc/XboxController.h>
 #include <frc/Servo.h>
 
 #include "PPM/PPMFlipsky.h"
@@ -14,7 +14,7 @@
 
 struct RobotMap {
   struct Controllers {
-    frc::Joystick primary{0};
+    frc::XboxController primary{0};
   };
   Controllers controllers;
   TankConfig tankConfig{

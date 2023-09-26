@@ -43,7 +43,7 @@ HAL_DigitalHandle HAL_InitializePPMPort(HAL_PortHandle portHandle, const char *a
   }
 
   *status = 0;
-  HAL_SetPPMPeriodScale(handle, 3, status); // should equate to 200hz (can use 3 (50hz) if need be. Check when next available)
+  HAL_SetPPMPeriodScale(handle, 1, status); // should equate to 200hz (can use 3 (50hz) if need be. Check when next available)
 
   if (*status != 0) {
     std::cout << "Period scale set error" << std::endl;

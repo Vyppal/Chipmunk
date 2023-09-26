@@ -1,20 +1,10 @@
 #pragma once
 
 #include "PPM/PPMFlipsky.h"
-#include <frc/Joystick.h>
+#include <frc/XboxController.h>
 
 #include <units/length.h>
 #include <units/time.h>
-
-// struct LeftMotors {
-//   PPMFlipsky front;
-//   PPMFlipsky back;
-// };
-
-// struct RightMotors {
-//   PPMFlipsky front;
-//   PPMFlipsky back;
-// };
 
 struct TankConfig {
   PPMFlipsky leftFront;
@@ -27,34 +17,37 @@ struct TankConfig {
 
 class TankDrivebase {
  public:
-  TankDrivebase(TankConfig *tankConfig, frc::Joystick *joystick);
+  TankDrivebase(TankConfig *tankConfig, frc::XboxController *controller);
   void UpdateSpeeds();
-
+  void UpdateSpeedsJoystick();
+  void UpdateSpeedsXbox_V1();
+  void UpdateSpeedsXbox_V2();
+  
   void lowerSpeed() {
-    maxForwardSpeed = 1.5;
-    maxRotationSpeed = 1.61;
+    maxForwardSpeed = 1;
+    maxRotationSpeed = 1.1;
   }
   void higherSpeed() {
     maxForwardSpeed = 2.23;
     maxRotationSpeed = 2.4;
   }
-  bool getSpeeds() {
-    return (maxForwardSpeed == 2.23);
+  void normalSpeed() {
+    maxForwardSpeed = 1.5;
+    maxRotationSpeed = 1.61;
   }
 
 
  private:
   TankConfig *_config;
-  frc::Joystick *_joystick;
+  frc::XboxController *_controller;
 
   double _halvedWheelDistance;
 
   double driveDeadzone = 0.05;
   double twistDeadzone = 0.01;
 
-  double maxForwardSpeed = 2.23;//_m / 1_s; // in meters per second
-  // double maxRotationSpeed = 1.7;
-  double maxRotationSpeed = 2.4;
+  double maxForwardSpeed = 1; // in meters per second
+  double maxRotationSpeed = 1.4; // at this point, this is unitless i swear
 
   double maxMotorSpeed = maxForwardSpeed + _halvedWheelDistance * maxRotationSpeed;
 };

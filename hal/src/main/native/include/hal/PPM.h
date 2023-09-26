@@ -11,7 +11,6 @@
 #define HAL_PPM_H
 
 #include <stdint.h>
-#include <hal/HAL.h>
 #include <hal/Types.h>
 
 #ifdef __cplusplus
